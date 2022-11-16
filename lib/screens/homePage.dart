@@ -183,91 +183,91 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () {
-          validateAndInsertRecords();
+          Navigator.of(context).pushNamed('add_note');
         },
       ),
     );
   }
 
-  validateAndInsertRecords() {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text("Insert Records"),
-        content: Form(
-          key: insertKey,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextFormField(
-                validator: (val) {
-                  (val!.isEmpty) ? "Enter TopicName First..." : null;
-                },
-                onSaved: (val) {
-                  topicName = val;
-                },
-                controller: topicNameController,
-                decoration: const InputDecoration(
-                    border: const OutlineInputBorder(),
-                    hintText: "Enter TopicName Here....",
-                    labelText: "Topic"),
-              ),
-              const SizedBox(height: 10),
-              TextFormField(
-                maxLines: 5,
-                maxLength: 250,
-                validator: (val) {
-                  (val!.isEmpty) ? "Enter description First..." : null;
-                },
-                onSaved: (val) {
-                  description = val;
-                },
-                controller: descriptionController,
-                decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: "Enter description Here....",
-                    labelText: "description"),
-              ),
-            ],
-          ),
-        ),
-        actions: [
-          ElevatedButton(
-            child: const Text("Insert"),
-            onPressed: () {
-              if (insertKey.currentState!.validate()) {
-                insertKey.currentState!.save();
-
-                Map<String, dynamic> data = {
-                  'topicName': topicName,
-                  'description': description,
-                };
-                FirestoreHelper.firestoreHelper.insertRecords(data);
-              }
-              topicNameController.clear();
-              descriptionController.clear();
-
-              topicName = "";
-              description = "";
-              Navigator.of(context).pop();
-            },
-          ),
-          OutlinedButton(
-            child: const Text("Cancel"),
-            onPressed: () {
-              topicNameController.clear();
-              descriptionController.clear();
-
-              topicName = null;
-              description = null;
-
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
-      ),
-    );
-  }
+  // validateAndInsertRecords() {
+  //   showDialog(
+  //     context: context,
+  //     builder: (context) => AlertDialog(
+  //       title: const Text("Insert Records"),
+  //       content: Form(
+  //         key: insertKey,
+  //         child: Column(
+  //           mainAxisSize: MainAxisSize.min,
+  //           children: [
+  //             TextFormField(
+  //               validator: (val) {
+  //                 (val!.isEmpty) ? "Enter TopicName First..." : null;
+  //               },
+  //               onSaved: (val) {
+  //                 topicName = val;
+  //               },
+  //               controller: topicNameController,
+  //               decoration: const InputDecoration(
+  //                   border: OutlineInputBorder(),
+  //                   hintText: "Enter TopicName Here....",
+  //                   labelText: "Topic"),
+  //             ),
+  //             const SizedBox(height: 10),
+  //             TextFormField(
+  //               maxLines: 5,
+  //               maxLength: 250,
+  //               validator: (val) {
+  //                 (val!.isEmpty) ? "Enter description First..." : null;
+  //               },
+  //               onSaved: (val) {
+  //                 description = val;
+  //               },
+  //               controller: descriptionController,
+  //               decoration: const InputDecoration(
+  //                   border: OutlineInputBorder(),
+  //                   hintText: "Enter description Here....",
+  //                   labelText: "description"),
+  //             ),
+  //           ],
+  //         ),
+  //       ),
+  //       actions: [
+  //         ElevatedButton(
+  //           child: const Text("Insert"),
+  //           onPressed: () {
+  //             if (insertKey.currentState!.validate()) {
+  //               insertKey.currentState!.save();
+  //
+  //               Map<String, dynamic> data = {
+  //                 'topicName': topicName,
+  //                 'description': description,
+  //               };
+  //               FirestoreHelper.firestoreHelper.insertRecords(data);
+  //             }
+  //             topicNameController.clear();
+  //             descriptionController.clear();
+  //
+  //             topicName = "";
+  //             description = "";
+  //             Navigator.of(context).pop();
+  //           },
+  //         ),
+  //         OutlinedButton(
+  //           child: const Text("Cancel"),
+  //           onPressed: () {
+  //             topicNameController.clear();
+  //             descriptionController.clear();
+  //
+  //             topicName = null;
+  //             description = null;
+  //
+  //             Navigator.of(context).pop();
+  //           },
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   deleteData({required String id}) {
     showDialog(
